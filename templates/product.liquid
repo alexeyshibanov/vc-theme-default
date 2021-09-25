@@ -120,7 +120,7 @@
                         <p ng-bind="propName"></p>
                         <ul class="size">
                             <li ng-repeat="prop in props" ng-class="{
-                                'active': prop.selected && prop.available, 
+                                'active': prop.selected && prop.available,
                                 'disabled': !prop.available
                             }">
                                 <a href="" ng-click="checkProperty(prop)" ng-bind="prop.value ? prop.value : 'undef'"></a>
@@ -151,13 +151,13 @@
                 {% if settings.product_compare_enabled %}
                     <add-to-compare-button ng-if="selectedVariation.id" product-id="selectedVariation.id"></add-to-compare-button>
                 {% endif %}
-                 <button id="addToWishlist" class="btn btn-clearfix list-btn-alignment" type="button" 
+                 <button id="addToWishlist" class="btn btn-clearfix list-btn-alignment" type="button"
                          ng-show="customer.isRegisteredUser"
                          ng-disabled="addToWishlistDisabled"
                          ng-click="addProductToWishlist(selectedVariation,$scope.listContains)">
                       <span class="fa fa-file-text list-icon-clearfix"></span>
-                      <span>{{ 'products.list.add_to_myList' | t }}</span>                      
-                 </button>                
+                      <span>{{ 'products.list.add_to_myList' | t }}</span>
+                 </button>
                 <span id="variantQuantity" class="variant-quantity"></span>
             </form>
             <hr>
@@ -189,6 +189,19 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        {% if product.customer_reviews.size > 0 %}
+            <h4>Customer reviews</h4>
+            {% for review in product.customer_reviews limit:5 %}
+                <p>
+                    {{ review.content }}
+                    <br>
+                    <time pubdate datetime="{{ review.created_date | date: 'yyyy-MM-dd' }}">
+                        <em class="text-light">{{ review.created_date | date: 'month_day_year' }}</em>
+                    </time>
+                </p>
+            {% endfor %}
         {% endif %}
     </div>
 </div>
@@ -228,10 +241,10 @@
 </script>
 
     {% if settings.related_products_enable %}
-    {% assign grid_item_width = 'large--one-fifth medium--one-third small--one-half' %}   
+    {% assign grid_item_width = 'large--one-fifth medium--one-third small--one-half' %}
 
     {% include 'related-products' %}
-   
+
     {% endif %}
 
     {% if settings.product_reviews_enable %}
